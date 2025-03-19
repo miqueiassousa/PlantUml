@@ -1,0 +1,22 @@
+@startuml Sistema de Biblioteca
+actor Usuario
+participant "Sistema" as Sistema
+participant "Livro" as Livro
+
+Usuario -> Sistema: Solicita empréstimo de livro
+activate Sistema
+
+Sistema -> Livro: Verifica disponibilidade
+activate Livro
+Livro --> Sistema: Disponível
+deactivate Livro
+
+Sistema -> Sistema: Registra empréstimo
+Sistema -> Livro: Atualiza status para "emprestado"
+activate Livro
+Livro --> Sistema: Status atualizado
+deactivate Livro
+
+Sistema -> Usuario: Notifica sucesso do empréstimo
+deactivate Sistema
+@enduml

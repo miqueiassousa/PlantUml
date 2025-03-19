@@ -1,0 +1,25 @@
+@startuml Sistema de Biblioteca
+start
+
+:Usuário solicita empréstimo de livro;
+if (Livro disponível?) then (sim)
+    fork
+        :Registrar empréstimo no sistema;
+    fork again
+        :Enviar notificação ao usuário;
+    end fork
+    :Atualizar status do livro para "emprestado";
+else (não)
+    :Notificar usuário sobre indisponibilidade do livro;
+endif
+
+:Usuário devolve livro;
+fork
+    :Registrar devolução no sistema;
+fork again
+    :Enviar notificação ao usuário;
+end fork
+:Atualizar status do livro para "disponível";
+
+stop
+@enduml

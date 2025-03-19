@@ -1,0 +1,33 @@
+@startuml Sistema de Biblioteca
+left to right direction
+
+actor Bibliotecario
+actor Usuario
+
+' Generalização
+Usuario <|-- Bibliotecario
+
+rectangle Biblioteca {
+    Bibliotecario -- (Gerenciar Livros)
+    Bibliotecario -- (Gerenciar Autores)
+    Bibliotecario -- (Gerenciar Usuarios)
+
+    Usuario -- (Consultar Disponibilidade)
+    Usuario -- (Solicitar Emprestimo)
+    Bibliotecario -- (Realizar Emprestimo)
+
+    (Notificar Atrasos) as NA
+    (Finalizar Emprestimo) as FE
+
+    (Solicitar Emprestimo) ..> (NA) : <<include>>
+    (Solicitar Emprestimo) <.. (FE) : <<extend>>
+
+    note right of (Gerenciar Livros)
+        - Adicionar livro
+        - Remover livro
+        - Buscar livro
+    end note
+
+}
+
+@enduml

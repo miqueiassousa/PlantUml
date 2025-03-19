@@ -1,0 +1,64 @@
+@startuml Sistema de Biblioteca
+' Definindo as classes
+class Livro {
+  - titulo: String
+  - isbn: String
+  - anoPublicacao: int
+  - numPaginas: int
+  - disponivel: boolean
+  + emprestar()
+  + devolver()
+}
+
+class Autor {
+  - nome: String
+  - dataNascimento: Date
+  - nacionalidade: String
+  + adicionarLivro(livro: Livro)
+}
+
+class Usuario {
+  - nome: String
+  - cpf: String
+  - endereco: String
+  - telefone: String
+  + pegarEmprestado(livro: Livro)
+  + devolverLivro(livro: Livro)
+}
+
+class Emprestimo {
+  - dataEmprestimo: Date
+  - dataDevolucao: Date
+  + registrarEmprestimo(usuario: Usuario, livro: Livro)
+  + finalizarEmprestimo()
+}
+
+class Biblioteca {
+  - listaLivros: List<Livro>
+  - listaAutores: List<Autor>
+  - listaUsuarios: List<Usuario>
+  - listaEmprestimos: List<Emprestimo>
+  + adicionarLivro(livro: Livro)
+  + removerLivro(livro: Livro)
+  + buscarLivro(isbn: String): Livro
+  + adicionarUsuario(usuario: Usuario)
+  + registrarEmprestimo(usuario: Usuario, livro: Livro)
+}
+
+' Definindo os relacionamentos
+
+' Composição:   *--
+' Agregação:    o--
+' Associação:   --
+' Generalização <|--
+' Dependência   ..>
+
+Livro "1..*" *-- "1..*" Autor : escrito por
+Livro "1" -- "0..*" Emprestimo : emprestado em
+Usuario "1" -- "0..*" Emprestimo : realiza
+Biblioteca "1" o-- "0..*" Livro : gerencia
+Biblioteca "1" o-- "0..*" Autor : gerencia
+Biblioteca "1" o-- "0..*" Usuario : gerencia
+Biblioteca "1" o-- "0..*" Emprestimo : gerencia
+
+@enduml
